@@ -4,6 +4,7 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Toolkit;
+import java.util.ArrayList;
 import javax.swing.JFrame;
 
 public class World extends Canvas
@@ -14,6 +15,13 @@ public class World extends Canvas
 	private String name;
 
 	private GFrame frame;
+
+	public double TotalEntities = 0.00001;
+
+	public ArrayList<Entity> entities = new ArrayList<Entity>();
+	
+	// TODO: turn to arraylist at some point
+	public int[][] dirties = new int[][] {new int[] {5}, new int[] {5}};
 
 	public World(String name)
 	{
@@ -34,6 +42,8 @@ public class World extends Canvas
 		frame.setResizable(true);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
+
+		this.addEntity(new Zombie(5, 5, this.TotalEntities));
 	}
 
 	public GFrame getFrame()
@@ -54,25 +64,50 @@ public class World extends Canvas
 				g.setColor(Color.DARK_GRAY);
 				g.fillRect(j + 1, i + 1, 16 - 2, 16 - 2);
 			}
-		
+
 		update(g);
+		
+		redraw(g);
 	}
-	
+
+	// TODO: needs to convert for arraylist at some point
+	private void redraw(Graphics g)
+	{
+		for (int i = 0; i < dirties[0].length; i++)
+			this.repaint(dirties[0][i], dirties[1][i], dirties[0][i] + 15, dirties[1][i] + 15);
+	}
+
 	public void update(Graphics g)
 	{
-		for (int i = 0; i < Main.entities.size(); i++)
+		for (int i = 0; i < this.entities.size(); i++)
 		{
-			g.drawImage(Main.entities.get(i).getImage(), Main.entities.get(i).getX() * 16, Main.entities.get(i).getY() * 16, Main.entities.get(i).getX() * 16 + 15, Main.entities.get(i).getY() * 16 + 15, 0, 0, 15, 15, Main.entities.get(i).getObserver());
+			System.out.println("TEST");
+			g.drawImage(this.entities.get(i).getImage(), this.entities.get(i).getX() * 16, this.entities.get(i).getY() * 16, this.entities.get(i).getX() * 16 + 15, this.entities.get(i).getY() * 16 + 15, 0, 0, 15, 15, this.entities.get(i).getObserver());
 		}
 	}
-	
+
 	public int findEntity(double d)
 	{
-		for (int i = 0; i < Main.entities.size(); i++)
-			if (Main.entities.get(i).getId() == d)
+		for (int i = 0; i < this.entities.size(); i++)
+			if (this.entities.get(i).getId() == d)
 				return i;
-		
+
 		return -1;
+	}
+
+	public void balanceEntities(ArrayList<Entity> e)
+	{
+		for (int i = 0; i < e.size(); i++)
+			e.get(i).setId(e.get(i).getId() - .00001);
+
+		this.TotalEntities -= .00001;
+	}
+	
+	public void addEntity(Entity e)
+	{
+		e.setDirty(true);
+		this.entities.add(e);
+		this.TotalEntities += .00001;
 	}
 
 }

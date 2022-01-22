@@ -13,15 +13,18 @@ public class Entity extends Canvas
 	{
 		PLAYER, PERSON, ZOMBIE
 	}
-	
+
 	private int[] pixels;
 	private BufferedImage image;
+	
+	private Type type = null;
+	private double id = 0.00000;
+	
+	private boolean dirty;
+	private boolean moveable;
+	
 	private int XTile;
 	private int YTile;
-	
-	private boolean moveable;
-	private double id = 0.00000;
-	private Type type = null;
 
 	private ImageObserver observer = new ImageObserver()
 	{
@@ -32,9 +35,10 @@ public class Entity extends Canvas
 		}
 	};
 
-	public Entity(int[] pixels)
+	public Entity(int[] pixels, double id)
 	{
 		this.setPixels(pixels);
+		this.setId(id);
 
 		BufferedImage img = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
 
@@ -42,10 +46,6 @@ public class Entity extends Canvas
 			img.setRGB(pixels[i], pixels[i + 1], pixels[i + 2]);
 
 		this.setImage(img);
-		
-		this.setId(Main.TotalEntities);
-		
-		Main.TotalEntities += .00001;
 	}
 
 	public int[] getPixels()
@@ -78,7 +78,9 @@ public class Entity extends Canvas
 		this.observer = observer;
 	}
 
-	protected void createPixelArray(){}
+	protected void createPixelArray()
+	{
+	}
 
 	public boolean isMoveable()
 	{
@@ -132,6 +134,11 @@ public class Entity extends Canvas
 
 	public boolean isDirty()
 	{
-		return false;
+		return dirty;
+	}
+
+	public void setDirty(boolean flag)
+	{
+		this.dirty = flag;
 	}
 }

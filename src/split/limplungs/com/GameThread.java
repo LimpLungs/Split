@@ -58,10 +58,13 @@ public class GameThread
 
 	public void render(World world)
 	{
-		for (int i = 0; i < Main.entities.size(); i++)
+		for (int i = 0; i < world.entities.size(); i++)
 		{
-			if (Main.entities.get(i).isDirty())
-				world.repaint(Main.entities.get(i).getXTile() * 16, Main.entities.get(i).getYTile() * 16, Main.entities.get(i).getXTile() * 16 + 15, Main.entities.get(i).getYTile() * 16 + 15);
+			if (world.entities.get(i).isDirty())
+			{
+				world.repaint(world.entities.get(i).getXTile() * 16, world.entities.get(i).getYTile() * 16, world.entities.get(i).getXTile() * 16 + 15, world.entities.get(i).getYTile() * 16 + 15);
+				world.entities.get(i).setDirty(false);
+			}
 		}
 	}
 

@@ -8,9 +8,9 @@ public class Zombie extends Entity
 	
 	private static int[] pix = new int[3 * 16 * 16];
 
-	public Zombie(int x, int y)
+	public Zombie(int x, int y, double id)
 	{
-		super(pix);
+		super(pix, id);
 		
 		this.setMoveable(true);
 		
@@ -31,9 +31,9 @@ public class Zombie extends Entity
 		this.setType(Entity.Type.ZOMBIE);
 	}
 	
-	public Zombie()
+	public Zombie(double id)
 	{
-		super(pix);
+		super(pix, id);
 		
 		this.setMoveable(true);
 

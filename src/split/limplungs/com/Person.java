@@ -8,9 +8,9 @@ public class Person extends Entity
 	
 	private static int[] pix = new int[3 * 16 * 16];
 
-	public Person(int x, int y)
+	public Person(int x, int y, double id)
 	{
-		super(pix);
+		super(pix, id);
 		
 		this.setMoveable(true);
 		
@@ -31,9 +31,9 @@ public class Person extends Entity
 		this.setType(Entity.Type.PERSON);
 	}
 	
-	public Person()
+	public Person(double id)
 	{
-		super(pix);
+		super(pix, id);
 		
 		this.setMoveable(true);
 		
