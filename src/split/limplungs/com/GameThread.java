@@ -80,6 +80,9 @@ public class GameThread
 			if (delta > 0)
 			{
 				Thread.sleep(delta);
+				
+				if (Main.DEBUG)
+					System.out.println("TICK delay: " + delta);
 			}
 		}
 		catch (InterruptedException e)

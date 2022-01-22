@@ -3,15 +3,7 @@ package split.limplungs.com;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.Toolkit;
-import java.awt.image.BufferedImage;
-import java.awt.image.ImageObserver;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Random;
-import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
 public class World extends Canvas
