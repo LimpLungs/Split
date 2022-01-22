@@ -44,7 +44,8 @@ public class GFrame extends JFrame
 			final int h = screenBounds.height - screenInsets.bottom - screenInsets.top;
 			final Rectangle maximizedBounds = new Rectangle(x, y, w, h);
 
-			System.out.println("cfg (" + cfg + ") screen.{bounds: " + screenBounds + ", insets: " + screenInsets + ", maxBounds: " + maximizedBounds);
+			if (Main.DEBUG)
+				System.out.println("cfg (" + cfg + ") screen.{bounds: " + screenBounds + ", insets: " + screenInsets + ", maxBounds: " + maximizedBounds);
 
 			super.setMaximizedBounds(maximizedBounds);
 		}

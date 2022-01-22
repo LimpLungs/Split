@@ -58,8 +58,11 @@ public class GameThread
 
 	public void render(World world)
 	{
-		// repaint spot of change
-		//world.repaint(0, 0, 0, 0);
+		for (int i = 0; i < Main.entities.size(); i++)
+		{
+			if (Main.entities.get(i).isDirty())
+				world.repaint(Main.entities.get(i).getXTile() * 16, Main.entities.get(i).getYTile() * 16, Main.entities.get(i).getXTile() * 16 + 15, Main.entities.get(i).getYTile() * 16 + 15);
+		}
 	}
 
 	// Set the start time for frame calculations to ensure a consistent 20ms frame.

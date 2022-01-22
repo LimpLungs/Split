@@ -8,9 +8,34 @@ public class Zombie extends Entity
 	
 	private static int[] pix = new int[3 * 16 * 16];
 
+	public Zombie(int x, int y)
+	{
+		super(pix);
+		
+		this.setMoveable(true);
+		
+		this.setXTile(x);
+		this.setYTile(y);
+
+		for (int i = 0; i < pix.length; i += 3)
+		{
+			pix[i] = (i / 3) % 16;
+			pix[i + 1] = (i / 3) / 16;
+			pix[i + 2] = new Color(0, 0, 0, 0).getRGB();
+		}
+		
+		this.createPixelArray();
+
+		this.setPixels(pix);
+		
+		this.setType(Entity.Type.ZOMBIE);
+	}
+	
 	public Zombie()
 	{
 		super(pix);
+		
+		this.setMoveable(true);
 
 		for (int i = 0; i < pix.length; i += 3)
 		{
@@ -24,26 +49,26 @@ public class Zombie extends Entity
 		this.setPixels(pix);
 	}
 
-	private void createPixelArray()
+	@Override
+	protected void createPixelArray()
 	{
-
-		for (int i = 16 * 2 + 3; i < 16 * 2 + 12; i++)
+		for (int i = 16 * 2 + 3; i < 16 * 2 + 13; i++)
 			pix[2 + (3 * i)] = Color.GREEN.getRGB();
 
-		for (int j = 3; j < 10; j++)
-			for (int k = 16 * j + 2; k < 16 * j + 13; k++)
+		for (int j = 3; j < 11; j++)
+			for (int k = 16 * j + 2; k < 16 * j + 14; k++)
 				pix[2 + (3 * k)] = Color.GREEN.getRGB();
 
-		for (int l = 16 * 10 + 3; l < 16 * 10 + 12; l++)
+		for (int l = 16 * 10 + 3; l < 16 * 10 + 13; l++)
 			pix[2 + (3 * l)] = Color.GREEN.getRGB();
 
-		for (int m = 16 * 11 + 3; m < 16 * 11 + 12; m++)
+		for (int m = 16 * 11 + 3; m < 16 * 11 + 13; m++)
 			pix[2 + (3 * m)] = Color.GREEN.getRGB();
 
-		for (int n = 16 * 12 + 4; n < 16 * 12 + 11; n++)
+		for (int n = 16 * 12 + 4; n < 16 * 12 + 12; n++)
 			pix[2 + (3 * n)] = Color.GREEN.getRGB();
 
-		for (int n = 16 * 13 + 6; n < 16 * 13 + 9; n++)
+		for (int n = 16 * 13 + 6; n < 16 * 13 + 10; n++)
 			pix[2 + (3 * n)] = Color.GREEN.getRGB();
 
 		pix[2 + (3 * (16 * (3 + 1) + 5))] = Color.DARK_GRAY.getRGB();
