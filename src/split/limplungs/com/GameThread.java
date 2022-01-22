@@ -11,6 +11,8 @@ public class GameThread
 
 	private Thread THREAD;
 
+	private long delta;
+
 	public void run(World world)
 	{
 		STATE = State.ON;
@@ -41,19 +43,43 @@ public class GameThread
 
 	public void update(World world)
 	{
+		startFrameDelay();
+
 		if (world.getFrame().isVisible() == false)
 		{
 			exit(world);
-			
+
 			this.STATE = GameThread.State.OFF;
 		}
+
+		endFrameDelay();
+
+		if (delta < 20)
+			try
+			{
+				this.THREAD.sleep(20 - delta);
+			}
+			catch (InterruptedException e)
+			{
+				e.printStackTrace();
+			}
 	}
 
 	public void render(World world)
 	{
 
 	}
-	
+
+	private void startFrameDelay()
+	{
+		delta = System.currentTimeMillis();
+	}
+
+	private void endFrameDelay()
+	{
+		delta = System.currentTimeMillis() - delta;
+	}
+
 	public void exit(World world)
 	{
 		world.getFrame().setVisible(false);
