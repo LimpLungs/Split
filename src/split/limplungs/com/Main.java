@@ -5,6 +5,7 @@ public class Main
 	public static final boolean DEBUG = true;
 
 	public static GameThread THREAD = new GameThread();
+	public static World world = new World("City");
 
 	public static void main(String[] args)
 	{
@@ -14,7 +15,6 @@ public class Main
 		}
 		catch (Exception e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
