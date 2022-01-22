@@ -1,6 +1,6 @@
 package split.limplungs.com;
 
-public abstract class GameThread
+public class GameThread
 {
 	public enum State
 	{
@@ -14,7 +14,7 @@ public abstract class GameThread
 	public void run()
 	{
 		STATE = State.ON;
-		THREAD = new Thread(this.update());
+		THREAD = new Thread(this.start());
 		THREAD.start();
 	}
 
@@ -23,5 +23,37 @@ public abstract class GameThread
 		STATE = State.OFF;
 	}
 
-	public abstract Runnable update();
+	public Runnable start()
+	{
+		int i = 0;
+		while (this.STATE == GameThread.State.ON)
+		{
+			update();
+			render();
+			if (Main.DEBUG)
+			{
+				System.out.println("Running...");
+
+				i++;
+
+				if (i > 1000000)
+				{
+					this.STATE = GameThread.State.OFF;
+					System.out.println("STOPPED");
+				}
+			}
+		}
+
+		return THREAD;
+	}
+
+	public void update()
+	{
+
+	}
+
+	public void render()
+	{
+
+	}
 }
