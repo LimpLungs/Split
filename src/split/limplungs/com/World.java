@@ -14,7 +14,7 @@ public class World extends Canvas
 	private String name;
 
 	private GFrame frame;
-
+	
 	public World(String name)
 	{
 		this.name = name;
@@ -30,12 +30,17 @@ public class World extends Canvas
 		frame.pack();
 		frame.setSize(this.getPreferredSize());
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setResizable(true);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 	}
 
+	public GFrame getFrame()
+	{
+		return frame;
+	}
+	
 	@Override
 	public void paint(Graphics g)
 	{

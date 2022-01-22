@@ -5,13 +5,12 @@ public class Main
 	public static final boolean DEBUG = true;
 
 	public static GameThread THREAD = new GameThread();
-	public static World world = new World("City");
 
 	public static void main(String[] args)
 	{
 		try
 		{
-			THREAD.run();
+			THREAD.run(new World("City"));
 		}
 		catch (Exception e)
 		{
