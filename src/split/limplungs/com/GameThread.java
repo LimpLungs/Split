@@ -30,7 +30,6 @@ public class GameThread
 		while (this.STATE == GameThread.State.ON)
 		{
 			update(world);
-			render(world);
 			if (Main.DEBUG)
 				System.out.println("Running...");
 		}
@@ -51,33 +50,42 @@ public class GameThread
 
 			this.STATE = GameThread.State.OFF;
 		}
+		
+		render(world);
 
 		endFrameDelay();
-
-		if (delta < 20)
-			try
-			{
-				this.THREAD.sleep(20 - delta);
-			}
-			catch (InterruptedException e)
-			{
-				e.printStackTrace();
-			}
 	}
 
 	public void render(World world)
 	{
-
+		// repaint spot of change
+		//world.repaint(0, 0, 0, 0);
 	}
 
+	// Set the start time for frame calculations to ensure a consistent 20ms frame.
 	private void startFrameDelay()
 	{
 		delta = System.currentTimeMillis();
 	}
 
+	// Calculate the difference in the start of the frame and the end of the frame
+	// Adjust delta to be the target frame time of 20ms - time elapsed.
+	// Sleep on delta remaining.
 	private void endFrameDelay()
 	{
-		delta = System.currentTimeMillis() - delta;
+		delta = 20 - (System.currentTimeMillis() - delta);
+
+		try
+		{
+			if (delta > 0)
+			{
+				Thread.sleep(delta);
+			}
+		}
+		catch (InterruptedException e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 	public void exit(World world)
