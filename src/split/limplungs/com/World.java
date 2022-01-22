@@ -63,20 +63,8 @@ public class World extends Canvas
 				g.fillRect(j + 1, i + 1, 16 - 2, 16 - 2);
 			}
 
-		int[] pix = new int[3 * 16];
-		
-		for (int i = 0; i < pix.length; i++)
-		{
-			if (i % 3 == 0)
-				pix[i] = i % 16;
-			else if (i % 3 == 1)
-				pix[i] = i / 16;
-			else if (i % 3 == 2)
-				pix[i] = Color.BLUE.getRGB();
-		}
-		
-		Entity nt = new Entity(pix);
-		g.drawImage(nt.getImage(), 1, 1, 16, 16, 1, 1, 16, 16, nt.getObserver());
+		Zombie nt = new Zombie();
+		g.drawImage(nt.getImage(), 0, 0, 16, 16, 0, 0, 16, 16, nt.getObserver());
 	}
 
 }

@@ -1,11 +1,23 @@
 package split.limplungs.com;
 
+import java.awt.Color;
+
 public class Zombie extends Entity
 {
-	public Zombie(int[] pixels)
+	private static int[] pix = new int[3 * 16 * 16];
+	
+	public Zombie()
 	{
-		super(pixels);
-		// TODO Auto-generated constructor stub
+		super(pix);
+		
+		for (int i = 0; i < pix.length; i += 3)
+		{
+			pix[i] = (i / 3) % 16;
+			pix[i + 1] = (i / 3) / 16;
+			pix[i + 2] = Color.GREEN.getRGB();
+		}
+		
+		this.setPixels(pix);
 	}
 
 	private static final long serialVersionUID = -8893875991021986068L;
