@@ -3,6 +3,7 @@ package split.limplungs.com;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
+import javax.swing.JPanel;
 
 public class Entity
 {
@@ -13,13 +14,12 @@ public class Entity
 
 	private int[] pixels;
 	private BufferedImage image;
-	
+
 	private Type type = null;
 	private double id = 0.00000;
-	
-	private boolean dirty;
+
 	private boolean moveable;
-	
+
 	private int XTile;
 	private int YTile;
 
@@ -40,13 +40,10 @@ public class Entity
 
 		BufferedImage img = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
 
-		
 		for (int i = 0; i < pixels.length; i += 3)
 			img.setRGB(pixels[i], pixels[i + 1], pixels[i + 2]);
 
 		this.setImage(img);
-		
-		this.setDirty(true);
 	}
 
 	public int[] getPixels()
@@ -129,13 +126,23 @@ public class Entity
 		this.type = type;
 	}
 
-	public boolean isDirty()
+	public void moveLeft()
 	{
-		return dirty;
+		this.setXTile(this.getXTile() - 1);
 	}
 
-	public void setDirty(boolean flag)
+	public void moveRight()
 	{
-		this.dirty = flag;
+		this.setXTile(this.getXTile() + 1);
+	}
+
+	public void moveUp()
+	{
+		this.setYTile(this.getYTile() - 1);
+	}
+
+	public void moveDown()
+	{
+		this.setYTile(this.getYTile() + 1);
 	}
 }

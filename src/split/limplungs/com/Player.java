@@ -20,6 +20,8 @@ public class Player extends Entity
 		
 		this.setMoveable(true);
 	}
+	
+	
 
 	public static int[] createPixelArray()
 	{

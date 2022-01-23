@@ -1,13 +1,16 @@
 package split.limplungs.com;
 
-import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
-public class World extends Canvas
+public class World extends JPanel
 {
 	private static final long serialVersionUID = 6405524727711665587L;
 
@@ -18,10 +21,9 @@ public class World extends Canvas
 
 	public double TotalEntities = 0.00001;
 
-	public ArrayList<Entity> entities = new ArrayList<Entity>();
+	public static ArrayList<Entity> entities = new ArrayList<Entity>();
 
-	// TODO: turn to arraylist at some point
-	public int[][] dirties = new int[][] { new int[] { 5 }, new int[] { 5 } };
+	public static ArrayList<Point> dirties = new ArrayList<Point>();
 
 	public World(String name)
 	{
@@ -42,6 +44,7 @@ public class World extends Canvas
 		frame.setResizable(true);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
+		frame.addKeyListener(CONTROLS);
 	}
 
 	public GFrame getFrame()
@@ -63,24 +66,25 @@ public class World extends Canvas
 
 	}
 
-	// TODO: needs to convert for arraylist at some point
 	private void redraw()
 	{
-		// for (int i = 0; i < dirties[0].length; i++)
-		// this.repaint(dirties[0][i], dirties[1][i], dirties[0][i] + 15,
-		// dirties[1][i] + 15);
+		while (dirties.size() > 0)
+		{
+			this.repaint(dirties.get(0).x * 16, dirties.get(0).y  * 16, 16, 16);
+			dirties.remove(0);
+		}
 	}
 
 	public void update()
 	{
-
+		
 	}
 
 	public void render()
 	{
-		for (int i = 0; i < this.entities.size(); i++)
+		for (int i = 0; i < World.entities.size(); i++)
 		{
-			switch (this.entities.get(i).getType())
+			switch (World.entities.get(i).getType())
 			{
 				case ZOMBIE:
 					Zombie zombie = (Zombie) entities.get(i);
@@ -95,19 +99,16 @@ public class World extends Canvas
 					this.getGraphics().drawImage(person.getImage(), person.getXTile() * 16, person.getYTile() * 16, person.getXTile() * 16 + 15, person.getYTile() * 16 + 15, 0, 0, 15, 15, person.getObserver());
 					break;
 			}
-			if (this.entities.get(i).isDirty())
-			{
-				this.entities.get(i).setDirty(false);
-
-			}
 		}
+
 		redraw();
+
 	}
 
 	public int findEntity(double d)
 	{
-		for (int i = 0; i < this.entities.size(); i++)
-			if (this.entities.get(i).getId() == d)
+		for (int i = 0; i < World.entities.size(); i++)
+			if (World.entities.get(i).getId() == d)
 				return i;
 
 		return -1;
@@ -123,9 +124,47 @@ public class World extends Canvas
 
 	public void addEntity(Entity e)
 	{
-		e.setDirty(true);
-		this.entities.add(e);
+		World.entities.add(e);
 		this.TotalEntities += .00001;
 	}
 
+
+	public static KeyListener CONTROLS = new KeyListener()
+	{
+		@Override
+		public void keyTyped(KeyEvent e)
+		{
+		}
+
+		@Override
+		public void keyPressed(KeyEvent e)
+		{
+			switch (e.getKeyCode())
+			{
+				case KeyEvent.VK_W:
+					World.dirties.add(new Point(((Entity)World.entities.get(0)).getXTile(), ((Entity)World.entities.get(0)).getYTile()));
+					((Entity)World.entities.get(0)).moveUp();
+					break;
+				case KeyEvent.VK_A:
+					World.dirties.add(new Point(((Entity)World.entities.get(0)).getXTile(), ((Entity)World.entities.get(0)).getYTile()));
+					((Entity)World.entities.get(0)).moveLeft();
+					break;
+				case KeyEvent.VK_S:
+					World.dirties.add(new Point(((Entity)World.entities.get(0)).getXTile(), ((Entity)World.entities.get(0)).getYTile()));
+					((Entity)World.entities.get(0)).moveDown();
+					break;
+				case KeyEvent.VK_D:
+					World.dirties.add(new Point(((Entity)World.entities.get(0)).getXTile(), ((Entity)World.entities.get(0)).getYTile()));
+					((Entity)World.entities.get(0)).moveRight();
+					break;
+			}
+			
+		}
+
+		@Override
+		public void keyReleased(KeyEvent e)
+		{
+		}
+
+	};
 }

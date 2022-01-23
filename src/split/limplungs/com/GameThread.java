@@ -40,6 +40,8 @@ public class GameThread
 		return THREAD;
 	}
 
+	int i = 0;
+
 	public void update(World world)
 	{
 		startFrameDelay();

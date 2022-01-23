@@ -9,6 +9,7 @@ public class Main
 	public static void main(String[] args)
 	{
 		World city = new World("City");
+		city.addEntity(new Player(17,17,city.TotalEntities));
 		city.addEntity(new Zombie(5,5,city.TotalEntities));
 		
 		try
