@@ -8,7 +8,7 @@ public class Entity
 {
 	public enum Type
 	{
-		PLAYER, PERSON, ZOMBIE
+		PLAYER, PERSON, ZOMBIE, BLOCK
 	}
 
 	private int[] pixels;

@@ -74,7 +74,7 @@ public class World extends JPanel
 
 	private void redraw()
 	{
-		while (World.dirties.size() > 0)
+		while (World.dirties.size() > 0 && World.dirties.get(0) != null)
 		{
 			if (World.occupied.size() > 0 && World.dirties.size() > 0)
 				for (int i = 0; i < World.occupied.size(); i++)
@@ -112,6 +112,10 @@ public class World extends JPanel
 					case PERSON:
 						Person person = (Person) entities.get(i);
 						this.getGraphics().drawImage(person.getImage(), person.getXTile() * 16, person.getYTile() * 16, person.getXTile() * 16 + 15, person.getYTile() * 16 + 15, 0, 0, 15, 15, person.getObserver());
+						break;
+					case BLOCK:
+						Block block = (Block) entities.get(i);
+						this.getGraphics().drawImage(block.getImage(), block.getXTile() * 16, block.getYTile() * 16, block.getXTile() * 16 + 15, block.getYTile() * 16 + 15, 0, 0, 15, 15, block.getObserver());
 						break;
 
 				}
@@ -177,10 +181,15 @@ public class World extends JPanel
 
 					if (!stop)
 					{
-						World.dirties.add(new Point(World.entities.get(0).getXTile(), World.entities.get(0).getYTile()));
+						Point p = new Point(World.entities.get(0).getXTile(), World.entities.get(0).getYTile());
+
+						World.dirties.add(p);
+
 						World.entities.get(0).moveUp();
+						World.moveHumans(p);
+
 						World.occupied.add(new Point(World.entities.get(0).getXTile(), World.entities.get(0).getYTile()));
-						World.moveHumans();
+
 						World.runMovements();
 					}
 					break;
@@ -197,10 +206,15 @@ public class World extends JPanel
 
 					if (!stop)
 					{
-						World.dirties.add(new Point(World.entities.get(0).getXTile(), World.entities.get(0).getYTile()));
+						Point p = new Point(World.entities.get(0).getXTile(), World.entities.get(0).getYTile());
+
+						World.dirties.add(p);
+
 						World.entities.get(0).moveLeft();
+						World.moveHumans(p);
+
 						World.occupied.add(new Point(World.entities.get(0).getXTile(), World.entities.get(0).getYTile()));
-						World.moveHumans();
+
 						World.runMovements();
 					}
 					break;
@@ -217,10 +231,15 @@ public class World extends JPanel
 
 					if (!stop)
 					{
-						World.dirties.add(new Point(World.entities.get(0).getXTile(), World.entities.get(0).getYTile()));
+						Point p = new Point(World.entities.get(0).getXTile(), World.entities.get(0).getYTile());
+
+						World.dirties.add(p);
+
 						World.entities.get(0).moveDown();
+						World.moveHumans(p);
+
 						World.occupied.add(new Point(World.entities.get(0).getXTile(), World.entities.get(0).getYTile()));
-						World.moveHumans();
+
 						World.runMovements();
 					}
 					break;
@@ -237,10 +256,15 @@ public class World extends JPanel
 
 					if (!stop)
 					{
-						World.dirties.add(new Point(World.entities.get(0).getXTile(), World.entities.get(0).getYTile()));
+						Point p = new Point(World.entities.get(0).getXTile(), World.entities.get(0).getYTile());
+
+						World.dirties.add(p);
+
 						World.entities.get(0).moveRight();
+						World.moveHumans(p);
+
 						World.occupied.add(new Point(World.entities.get(0).getXTile(), World.entities.get(0).getYTile()));
-						World.moveHumans();
+
 						World.runMovements();
 					}
 					break;
@@ -266,16 +290,73 @@ public class World extends JPanel
 
 	}
 
-	protected static void moveHumans()
+	protected static void moveHumans(Point p)
 	{
-		// TODO Auto-generated method stub
+		for (int h = 1; h < World.entities.size(); h++)
+		{
+			boolean stop = false;
 
+			if (World.entities.get(h) != null)
+			{
+				if (World.entities.get(h).getType() == Entity.Type.PERSON)
+				{
+					int dx = World.entities.get(h).getXTile() - p.x;
+					int dy = World.entities.get(h).getYTile() - p.y;
+
+					if (Math.abs(dx) == 1 || Math.abs(dy) == 1)
+					{
+						System.out.println("Player nearby");
+						if (World.occupied.size() > 0 && World.entities.size() > 0)
+							for (int i = 0; i < World.occupied.size(); i++)
+							{
+								if (World.occupied.get(i) != null)
+									if (World.occupied.get(i).x == p.x && World.occupied.get(i).y == p.y)
+									{
+										stop = true;
+										//moveHumans(World.occupied.get(i));
+									}
+							}
+
+						if (!stop)
+						{
+							if (dx == 1)
+							{
+								World.dirties.add(new Point(World.entities.get(h).getXTile(), World.entities.get(h).getYTile()));
+								World.entities.get(h).moveLeft();
+								World.occupied.add(new Point(World.entities.get(h).getXTile(), World.entities.get(h).getYTile()));
+								//moveHumans(World.occupied.get(i));
+							}
+							else if (dx == -1)
+							{
+								World.dirties.add(new Point(World.entities.get(h).getXTile(), World.entities.get(h).getYTile()));
+								World.entities.get(h).moveRight();
+								World.occupied.add(new Point(World.entities.get(h).getXTile(), World.entities.get(h).getYTile()));
+								//moveHumans(World.occupied.get(i));
+							}
+							else if (dy == -1)
+							{
+								World.dirties.add(new Point(World.entities.get(h).getXTile(), World.entities.get(h).getYTile()));
+								World.entities.get(h).moveDown();
+								World.occupied.add(new Point(World.entities.get(h).getXTile(), World.entities.get(h).getYTile()));
+								//moveHumans(World.occupied.get(i));
+							}
+							else if (dy == 1)
+							{
+								World.dirties.add(new Point(World.entities.get(h).getXTile(), World.entities.get(h).getYTile()));
+								World.entities.get(h).moveUp();
+								World.occupied.add(new Point(World.entities.get(h).getXTile(), World.entities.get(h).getYTile()));
+								//moveHumans(World.occupied.get(i));
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 
 	protected static void moveZombies()
 	{
-		int size = World.entities.size();
-		for (int z = 0; z < size; z++)
+		for (int z = 0; z < World.entities.size(); z++)
 		{
 			boolean stop = false;
 
@@ -350,8 +431,6 @@ public class World extends JPanel
 						World.occupied.add(new Point(World.entities.get(z).getXTile(), World.entities.get(z).getYTile()));
 					}
 				}
-			
-			size = World.entities.size();
 		}
 	}
 }
