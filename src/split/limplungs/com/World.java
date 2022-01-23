@@ -117,7 +117,7 @@ public class World extends JPanel
 						Block block = (Block) entities.get(i);
 						this.getGraphics().drawImage(block.getImage(), block.getXTile() * 16, block.getYTile() * 16, block.getXTile() * 16 + 15, block.getYTile() * 16 + 15, 0, 0, 15, 15, block.getObserver());
 						break;
-
+						
 				}
 		}
 
@@ -294,7 +294,7 @@ public class World extends JPanel
 	{
 		for (int h = 1; h < World.entities.size(); h++)
 		{
-			boolean stop = false;
+			boolean stop = true;
 
 			if (World.entities.get(h) != null)
 			{
@@ -303,50 +303,55 @@ public class World extends JPanel
 					int dx = World.entities.get(h).getXTile() - p.x;
 					int dy = World.entities.get(h).getYTile() - p.y;
 
-					if (Math.abs(dx) == 1 || Math.abs(dy) == 1)
+					if ((Math.abs(dx) == 1 && dy == 0) || (Math.abs(dy) == 1 && dx == 0))
 					{
-						System.out.println("Player nearby");
 						if (World.occupied.size() > 0 && World.entities.size() > 0)
 							for (int i = 0; i < World.occupied.size(); i++)
 							{
 								if (World.occupied.get(i) != null)
 									if (World.occupied.get(i).x == p.x && World.occupied.get(i).y == p.y)
 									{
-										stop = true;
-										//moveHumans(World.occupied.get(i));
+										stop = false;
+										// moveHumans(World.occupied.get(i));
 									}
 							}
 
 						if (!stop)
 						{
+							System.out.println("**");
 							if (dx == 1)
 							{
+								System.out.println("1*");
 								World.dirties.add(new Point(World.entities.get(h).getXTile(), World.entities.get(h).getYTile()));
 								World.entities.get(h).moveLeft();
 								World.occupied.add(new Point(World.entities.get(h).getXTile(), World.entities.get(h).getYTile()));
-								//moveHumans(World.occupied.get(i));
+								// moveHumans(World.occupied.get(i));
 							}
 							else if (dx == -1)
 							{
+								System.out.println("2*");
 								World.dirties.add(new Point(World.entities.get(h).getXTile(), World.entities.get(h).getYTile()));
 								World.entities.get(h).moveRight();
 								World.occupied.add(new Point(World.entities.get(h).getXTile(), World.entities.get(h).getYTile()));
-								//moveHumans(World.occupied.get(i));
+								// moveHumans(World.occupied.get(i));
 							}
 							else if (dy == -1)
 							{
+								System.out.println("3*");
 								World.dirties.add(new Point(World.entities.get(h).getXTile(), World.entities.get(h).getYTile()));
 								World.entities.get(h).moveDown();
 								World.occupied.add(new Point(World.entities.get(h).getXTile(), World.entities.get(h).getYTile()));
-								//moveHumans(World.occupied.get(i));
+								// moveHumans(World.occupied.get(i));
 							}
 							else if (dy == 1)
 							{
+								System.out.println("4*");
 								World.dirties.add(new Point(World.entities.get(h).getXTile(), World.entities.get(h).getYTile()));
 								World.entities.get(h).moveUp();
 								World.occupied.add(new Point(World.entities.get(h).getXTile(), World.entities.get(h).getYTile()));
-								//moveHumans(World.occupied.get(i));
+								// moveHumans(World.occupied.get(i));
 							}
+
 						}
 					}
 				}
