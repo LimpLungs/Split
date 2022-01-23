@@ -4,8 +4,6 @@ import java.awt.Color;
 
 public class Person extends Entity
 {
-	private static final long serialVersionUID = -9220626399550772571L;
-	
 	private static int[] pix = new int[3 * 16 * 16];
 
 	public Person(int x, int y, double id)

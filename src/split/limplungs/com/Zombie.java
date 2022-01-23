@@ -4,8 +4,6 @@ import java.awt.Color;
 
 public class Zombie extends Entity
 {
-	private static final long serialVersionUID = -8893875991021986068L;
-	
 	private static int[] pix = new int[3 * 16 * 16];
 
 	public Zombie(int x, int y, double id)

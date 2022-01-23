@@ -1,7 +1,5 @@
 package split.limplungs.com;
 
-import java.util.ArrayList;
-
 public class Main
 {
 	public static final boolean DEBUG = false;
@@ -10,10 +8,12 @@ public class Main
 
 	public static void main(String[] args)
 	{
+		World city = new World("City");
+		city.addEntity(new Zombie(5,5,city.TotalEntities));
 		
 		try
 		{
-			THREAD.run(new World("City"));
+			THREAD.run(city);
 		}
 		catch (Exception e)
 		{

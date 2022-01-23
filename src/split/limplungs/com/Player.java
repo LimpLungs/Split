@@ -4,8 +4,6 @@ import java.awt.Color;
 
 public class Player extends Entity
 {
-	private static final long serialVersionUID = -8444047422782304085L;
-	
 	private static int[] pix = new int[3 * 16 * 16];
 
 	public Player(int x, int y, double id)
@@ -36,7 +34,6 @@ public class Player extends Entity
 		super(pix, id);
 		
 		this.setMoveable(true);
-		this.setXTile(ABORT);
 		
 		for (int i = 0; i < pix.length; i += 3)
 		{

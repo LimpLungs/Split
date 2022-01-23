@@ -19,9 +19,9 @@ public class World extends Canvas
 	public double TotalEntities = 0.00001;
 
 	public ArrayList<Entity> entities = new ArrayList<Entity>();
-	
+
 	// TODO: turn to arraylist at some point
-	public int[][] dirties = new int[][] {new int[] {5}, new int[] {5}};
+	public int[][] dirties = new int[][] { new int[] { 5 }, new int[] { 5 } };
 
 	public World(String name)
 	{
@@ -42,8 +42,6 @@ public class World extends Canvas
 		frame.setResizable(true);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
-
-		this.addEntity(new Zombie(5, 5, this.TotalEntities));
 	}
 
 	public GFrame getFrame()
@@ -64,26 +62,33 @@ public class World extends Canvas
 				g.setColor(Color.DARK_GRAY);
 				g.fillRect(j + 1, i + 1, 16 - 2, 16 - 2);
 			}
-
-		update(g);
-		
-		redraw(g);
 	}
 
 	// TODO: needs to convert for arraylist at some point
-	private void redraw(Graphics g)
+	private void redraw()
 	{
-		for (int i = 0; i < dirties[0].length; i++)
-			this.repaint(dirties[0][i], dirties[1][i], dirties[0][i] + 15, dirties[1][i] + 15);
+		// for (int i = 0; i < dirties[0].length; i++)
+		// this.repaint(dirties[0][i], dirties[1][i], dirties[0][i] + 15,
+		// dirties[1][i] + 15);
 	}
 
-	public void update(Graphics g)
+	public void update()
+	{
+
+	}
+
+	public void render()
 	{
 		for (int i = 0; i < this.entities.size(); i++)
 		{
-			System.out.println("TEST");
-			g.drawImage(this.entities.get(i).getImage(), this.entities.get(i).getX() * 16, this.entities.get(i).getY() * 16, this.entities.get(i).getX() * 16 + 15, this.entities.get(i).getY() * 16 + 15, 0, 0, 15, 15, this.entities.get(i).getObserver());
+			if (this.entities.get(i).isDirty())
+			{
+				this.entities.get(i).setDirty(false);
+				this.getGraphics().drawImage(this.entities.get(i).getImage(), this.entities.get(i).getXTile() * 16, this.entities.get(i).getYTile() * 16, this.entities.get(i).getXTile() * 16 + 15, this.entities.get(i).getYTile() * 16 + 15, 0, 0, 15, 15, this.entities.get(i).getObserver());
+			}
 		}
+
+		redraw();
 	}
 
 	public int findEntity(double d)
@@ -102,7 +107,7 @@ public class World extends Canvas
 
 		this.TotalEntities -= .00001;
 	}
-	
+
 	public void addEntity(Entity e)
 	{
 		e.setDirty(true);

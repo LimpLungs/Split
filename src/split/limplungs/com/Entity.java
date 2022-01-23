@@ -1,14 +1,11 @@
 package split.limplungs.com;
 
-import java.awt.Canvas;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 
-public class Entity extends Canvas
+public class Entity
 {
-	private static final long serialVersionUID = -2393885498281593601L;
-
 	public enum Type
 	{
 		PLAYER, PERSON, ZOMBIE

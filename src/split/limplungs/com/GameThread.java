@@ -50,7 +50,7 @@ public class GameThread
 
 			this.STATE = GameThread.State.OFF;
 		}
-		
+
 		render(world);
 
 		endFrameDelay();
@@ -58,23 +58,21 @@ public class GameThread
 
 	public void render(World world)
 	{
-		for (int i = 0; i < world.entities.size(); i++)
+		if (world.getGraphics() != null)
 		{
-			if (world.entities.get(i).isDirty())
-			{
-				world.repaint(world.entities.get(i).getXTile() * 16, world.entities.get(i).getYTile() * 16, world.entities.get(i).getXTile() * 16 + 15, world.entities.get(i).getYTile() * 16 + 15);
-				world.entities.get(i).setDirty(false);
-			}
+			world.render();
 		}
 	}
 
-	// Set the start time for frame calculations to ensure a consistent 20ms frame.
+	// Set the start time for frame calculations to ensure a consistent 20ms
+	// frame.
 	private void startFrameDelay()
 	{
 		delta = System.currentTimeMillis();
 	}
 
-	// Calculate the difference in the start of the frame and the end of the frame
+	// Calculate the difference in the start of the frame and the end of the
+	// frame
 	// Adjust delta to be the target frame time of 20ms - time elapsed.
 	// Sleep on delta remaining.
 	private void endFrameDelay()
@@ -86,7 +84,7 @@ public class GameThread
 			if (delta > 0)
 			{
 				Thread.sleep(delta);
-				
+
 				if (Main.DEBUG)
 					System.out.println("TICK delay: " + delta);
 			}
