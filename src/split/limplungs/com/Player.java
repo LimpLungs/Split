@@ -4,36 +4,26 @@ import java.awt.Color;
 
 public class Player extends Entity
 {
-	private static int[] pix = new int[3 * 16 * 16];
-
 	public Player(int x, int y, double id)
 	{
-		super(pix, id);
+		super(id, Type.PLAYER, createPixelArray());
 		
 		this.setMoveable(true);
 		
 		this.setXTile(x);
 		this.setYTile(y);
-
-		for (int i = 0; i < pix.length; i += 3)
-		{
-			pix[i] = (i / 3) % 16;
-			pix[i + 1] = (i / 3) / 16;
-			pix[i + 2] = new Color(0, 0, 0, 0).getRGB();
-		}
-		
-		this.createPixelArray();
-
-		this.setPixels(pix);
-		
-		this.setType(Entity.Type.PLAYER);
 	}
 	
 	public Player(double id)
 	{
-		super(pix, id);
+		super(id, Type.PLAYER, createPixelArray());
 		
 		this.setMoveable(true);
+	}
+
+	public static int[] createPixelArray()
+	{
+		int[] pix = new int[3 * 16 * 16];
 		
 		for (int i = 0; i < pix.length; i += 3)
 		{
@@ -42,14 +32,6 @@ public class Player extends Entity
 			pix[i + 2] = new Color(0, 0, 0, 0).getRGB();
 		}
 		
-		this.createPixelArray();
-		
-		this.setPixels(pix);
-	}
-
-	@Override
-	protected void createPixelArray()
-	{
 		for (int i = 16 * 2 + 3; i < 16 * 2 + 13; i++)
 			pix[2 + (3 * i)] = Color.CYAN.getRGB();
 
@@ -90,6 +72,8 @@ public class Player extends Entity
 		pix[2 + (3 * (16 * (9 + 1) + 7))] = Color.DARK_GRAY.getRGB();
 		pix[2 + (3 * (16 * (9 + 1) + 8))] = Color.DARK_GRAY.getRGB();
 		pix[2 + (3 * (16 * (9 + 1) + 9))] = Color.DARK_GRAY.getRGB();
+		
+		return pix;
 	}
-	
+
 }

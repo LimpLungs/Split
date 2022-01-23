@@ -32,17 +32,21 @@ public class Entity
 		}
 	};
 
-	public Entity(int[] pixels, double id)
+	public Entity(double id, Type type, int[] pixels)
 	{
-		this.setPixels(pixels);
 		this.setId(id);
+		this.setType(type);
+		this.setPixels(pixels);
 
 		BufferedImage img = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
 
+		
 		for (int i = 0; i < pixels.length; i += 3)
 			img.setRGB(pixels[i], pixels[i + 1], pixels[i + 2]);
 
 		this.setImage(img);
+		
+		this.setDirty(true);
 	}
 
 	public int[] getPixels()
@@ -73,10 +77,6 @@ public class Entity
 	public void setObserver(ImageObserver observer)
 	{
 		this.observer = observer;
-	}
-
-	protected void createPixelArray()
-	{
 	}
 
 	public boolean isMoveable()

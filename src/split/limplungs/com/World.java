@@ -57,11 +57,10 @@ public class World extends Canvas
 		for (int i = 0; i < this.getSize().getWidth(); i += 16)
 			for (int j = 0; j < this.getSize().getWidth(); j += 16)
 			{
-				g.setColor(Color.BLACK);
-				g.drawRect(j, i, 16, 16);
 				g.setColor(Color.DARK_GRAY);
-				g.fillRect(j + 1, i + 1, 16 - 2, 16 - 2);
+				g.fillRect(j + 0, i + 0, 16 - 0, 16 - 0);
 			}
+
 	}
 
 	// TODO: needs to convert for arraylist at some point
@@ -81,13 +80,27 @@ public class World extends Canvas
 	{
 		for (int i = 0; i < this.entities.size(); i++)
 		{
+			switch (this.entities.get(i).getType())
+			{
+				case ZOMBIE:
+					Zombie zombie = (Zombie) entities.get(i);
+					this.getGraphics().drawImage(zombie.getImage(), zombie.getXTile() * 16, zombie.getYTile() * 16, zombie.getXTile() * 16 + 15, zombie.getYTile() * 16 + 15, 0, 0, 15, 15, zombie.getObserver());
+					break;
+				case PLAYER:
+					Player player = (Player) entities.get(i);
+					this.getGraphics().drawImage(player.getImage(), player.getXTile() * 16, player.getYTile() * 16, player.getXTile() * 16 + 15, player.getYTile() * 16 + 15, 0, 0, 15, 15, player.getObserver());
+					break;
+				case PERSON:
+					Person person = (Person) entities.get(i);
+					this.getGraphics().drawImage(person.getImage(), person.getXTile() * 16, person.getYTile() * 16, person.getXTile() * 16 + 15, person.getYTile() * 16 + 15, 0, 0, 15, 15, person.getObserver());
+					break;
+			}
 			if (this.entities.get(i).isDirty())
 			{
 				this.entities.get(i).setDirty(false);
-				this.getGraphics().drawImage(this.entities.get(i).getImage(), this.entities.get(i).getXTile() * 16, this.entities.get(i).getYTile() * 16, this.entities.get(i).getXTile() * 16 + 15, this.entities.get(i).getYTile() * 16 + 15, 0, 0, 15, 15, this.entities.get(i).getObserver());
+
 			}
 		}
-
 		redraw();
 	}
 

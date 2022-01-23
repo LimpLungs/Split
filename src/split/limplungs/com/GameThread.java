@@ -50,7 +50,7 @@ public class GameThread
 
 			this.STATE = GameThread.State.OFF;
 		}
-
+		
 		render(world);
 
 		endFrameDelay();
